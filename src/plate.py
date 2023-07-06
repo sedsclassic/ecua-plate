@@ -9,19 +9,27 @@ class Plate:
     price: float
 
 
-PLATES = {
-    # id: plate
-    1: Plate("Chugchucara", 9.99),
-    2: Plate("Churrasco", 4.99),
-    3: Plate("Llapingacho", 7.99),
-    }
+class PlateService:
+    plates = {
+        # id: plate
+        1: Plate("Chugchucara", 9.99),
+        2: Plate("Churrasco", 4.99),
+        3: Plate("Llapingacho", 7.99),
+        }
 
-for key in PLATES:
-    print(f"{PLATES[key].name} (${PLATES[key].price}): {key}")
+    def display_menu(self):
+        for key in self.plates:
+            print(f"{self.plates[key].name} (${self.plates[key].price}): {key}")
 
-while(True):
-    print("\n\nEnter code to add cart: ")
-    selection = int(input());
+    def add_plate(self, dish_name: string, price: int):
+        self.plates[len(self.plates)+1] = Plate(dish_name, price)
 
-    print(f"You have selected {PLATES[selection].name} (${PLATES[selection].price})")
+#add_plate("Encebollado", 2.99)
+#display_menu()
+
+# while(True):
+#     print("\nEnter code to add cart: ")
+#     selection = int(input())
+#
+#     print(f"You have selected {PLATES[selection].name} (${PLATES[selection].price})")
 
