@@ -15,17 +15,18 @@ class Account:
     type: AccountType
 
 
-#Account("Maria Jose", "majo@hotmail.com", 'ADMIN'),
-#Account("Samuel Jo", "sajo@hotmail.com", 'CUSTOMER'),
-
 class LoginService:
-    _accounts: list[Account] = []
+    _accounts: list[Account] = [
+        Account("Aaa Aa", "a@a.a", AccountType.CUSTOMER),
+        Account("Maria Jose", "majo@hotmail.com", AccountType.ADMIN),
+        Account("Jose Maria", "joma@hotmail.com", AccountType.CUSTOMER),
+    ]
 
     def display_users(self):
         print("----------------USERS----------------")
         for acc in self._accounts:
-            print(f"| {acc.name} {acc.email} {acc.type}")
-        print("-------------------------------------")
+            print(f"| {acc.name} {acc.email} {acc.type.value}")
+        print("-------------------------------------\n")
 
     def add_user(self, name: string, email: string, acc_type: AccountType):
         self._accounts.append(Account(name, email, acc_type))
@@ -37,7 +38,7 @@ class LoginService:
             if email == acc.email:
                 print(f"Welcome {acc.name}")
                 return True
-        print("No result found")
+        print("Account not found.")
         return False
 
 # login = LoginService()

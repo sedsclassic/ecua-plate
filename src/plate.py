@@ -5,31 +5,43 @@ import string
 
 @dataclass
 class Plate:
+    plate_id: int
     name: string
     price: float
 
 
 class PlateService:
-    plates = {
-        # id: plate
-        1: Plate("Chugchucara", 9.99),
-        2: Plate("Churrasco", 4.99),
-        3: Plate("Llapingacho", 7.99),
-        }
+    _plates = [
+        Plate(1, "Chugchucara", 9.99),
+        Plate(2, "Churrasco", 4.99),
+        Plate(3, "Llapingacho", 7.99),
+    ]
 
     def display_menu(self):
-        for key in self.plates:
-            print(f"{self.plates[key].name} (${self.plates[key].price}): {key}")
+        print("----------------MENU-----------------")
+        for plate in self._plates:
+            print(f"| (ID: {plate.plate_id}) - {plate.name} (${plate.price})")
+        print("-------------------------------------\n")
 
-    def add_plate(self, dish_name: string, price: int):
-        self.plates[len(self.plates)+1] = Plate(dish_name, price)
+    def add_new_plate(self, dish_name: string, price: int):
+        new_id = len(self._plates) + 1
+        self._plates.append(Plate(new_id, dish_name, price))
 
-#add_plate("Encebollado", 2.99)
-#display_menu()
+    def does_plate_exist(self, plate_id: int):
+        for plate in self._plates:
+            if plate.plate_id == plate_id:
+                return True
+        print("Plate was not found.")
+        return False
 
-# while(True):
-#     print("\nEnter code to add cart: ")
-#     selection = int(input())
-#
-#     print(f"You have selected {PLATES[selection].name} (${PLATES[selection].price})")
+    def find_plate(self, plate_id: int):
+        for plate in self._plates:
+            if plate.plate_id == plate_id:
+                return plate
+        print("Error(find_plate).")
+
+
+# plate = PlateService()
+# plate.add_plate("Encebollado", 2.99)
+# plate.display_menu()
 
