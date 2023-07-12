@@ -2,6 +2,9 @@ from dataclasses import dataclass
 from enum import Enum
 import string
 
+# Admin password
+ADMIN_PWD = "admin"
+
 
 class AccountType(Enum):
     ADMIN = 'ADMIN'
@@ -28,18 +31,40 @@ class LoginService:
             print(f"| {acc.name} {acc.email} {acc.type.value}")
         print("-------------------------------------\n")
 
-    def add_user(self, name: string, email: string, acc_type: AccountType):
-        self._accounts.append(Account(name, email, acc_type))
+    def register_account(self, acc_type: AccountType):
+        if acc_type == AccountType.ADMIN:
+            admin_pwd = input("Enter admin password:")
+            if admin_pwd != ADMIN_PWD:
+                print("Access denied.")
+                return
+
+        new_name = input("Enter your name:")
+        new_email = input("Enter your email:")
+
+        self._accounts.append(Account(new_name, new_email, acc_type))
         print("Account added successfully.")
 
-    def login(self) -> bool:
+    def login(self, account_type: AccountType) -> bool:
         email = input("Enter email: ")
         for acc in self._accounts:
-            if email == acc.email:
-                print(f"Welcome {acc.name}")
+            if email == acc.email and account_type == acc.type:
+                print(f"        Welcome {acc.name}!")
                 return True
         print("Account not found.")
         return False
+
+    def get_account_type(self) -> AccountType:
+        user_type = ""
+        while user_type != "-c" and user_type != "-a":
+            user_type = input("-c(customer), -a(admin):")
+
+        if user_type == "-c":
+            return AccountType.CUSTOMER
+        else:
+            return AccountType.ADMIN
+
+
+
 
 # login = LoginService()
 # login.display_users()
