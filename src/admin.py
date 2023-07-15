@@ -29,7 +29,7 @@ class AdminService:
                     elif selection == "-r":
                         self._plate_service.display_menu()
                         plate_id = int(input("Enter the ID of plate to remove:"))
-                        self._plate_service.remove_plate(plate_id)
+                        self._plate_service.delete_plate(plate_id)
                         self._plate_service.display_menu()
 
             elif selection == "-ma":
@@ -38,5 +38,8 @@ class AdminService:
                     selection = input("-r(remove account), -c(cancel):")
 
                     if selection == "-r":
+                        self._login_service.display_users()
+                        delete_email = input("Enter email:")
+                        self._login_service.delete_account(delete_email)
                         self._login_service.display_users()
 

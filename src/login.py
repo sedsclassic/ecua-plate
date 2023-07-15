@@ -49,6 +49,15 @@ class LoginService:
         self._accounts.append(Account(new_name, new_email, account_type))
         print("Account added successfully.")
 
+    def delete_account(self, email):
+
+        for acc in self._accounts:
+            if acc.email == email:
+                self._accounts.remove(acc)
+                print("Account deleted successfully.")
+                return
+        print("Account not found.")
+
     def login(self, account_type: AccountType) -> bool:
         if account_type == AccountType.ADMIN and not LoginService.validate_admin_pwd():
             return False

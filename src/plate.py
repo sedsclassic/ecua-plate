@@ -23,13 +23,11 @@ class PlateService:
             print(f"| (ID: {plt.plate_id}) - {plt.name} (${plt.price})")
         print("-------------------------------------\n")
 
-    # TODO: Add admin validation
     def add_new_plate(self, dish_name: string, price: float):
         new_id = len(self._plates) + 1
         self._plates.append(Plate(new_id, dish_name, price))
 
-    # TODO: Add admin validation
-    def remove_plate(self, plate_id: int):
+    def delete_plate(self, plate_id: int):
         if plate_id < 1 or plate_id > len(self._plates):
             print("Invalid ID.")
             return
