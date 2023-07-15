@@ -23,7 +23,7 @@ while True:
 
     # Log in
     elif selection == "-l":
-        account_type = login_service.get_account_type()
+        account_type = login_service.prompt_account_type()
         if login_service.login(account_type):
 
             plate_service.display_menu()
@@ -35,5 +35,5 @@ while True:
 
     # Sign up
     elif selection == "-s":
-        account_type = login_service.get_account_type()
+        account_type = login_service.prompt_account_type()
         login_service.register_account(account_type)

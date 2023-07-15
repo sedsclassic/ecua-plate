@@ -31,20 +31,28 @@ class LoginService:
             print(f"| {acc.name} {acc.email} {acc.type.value}")
         print("-------------------------------------\n")
 
-    def register_account(self, acc_type: AccountType):
-        if acc_type == AccountType.ADMIN:
-            admin_pwd = input("Enter admin password:")
-            if admin_pwd != ADMIN_PWD:
-                print("Access denied.")
-                return
+    @staticmethod
+    def validate_admin_pwd():
+        admin_pwd = input("Enter admin password:")
+        if admin_pwd != ADMIN_PWD:
+            print("Access denied.")
+            return False
+        return True
+
+    def register_account(self, account_type: AccountType):
+        if account_type == AccountType.ADMIN and not LoginService.validate_admin_pwd():
+            return
 
         new_name = input("Enter your name:")
         new_email = input("Enter your email:")
 
-        self._accounts.append(Account(new_name, new_email, acc_type))
+        self._accounts.append(Account(new_name, new_email, account_type))
         print("Account added successfully.")
 
     def login(self, account_type: AccountType) -> bool:
+        if account_type == AccountType.ADMIN and not LoginService.validate_admin_pwd():
+            return False
+
         email = input("Enter email: ")
         for acc in self._accounts:
             if email == acc.email and account_type == acc.type:
@@ -53,7 +61,8 @@ class LoginService:
         print("Account not found.")
         return False
 
-    def get_account_type(self) -> AccountType:
+    @staticmethod
+    def prompt_account_type() -> AccountType:
         user_type = ""
         while user_type != "-c" and user_type != "-a":
             user_type = input("-c(customer), -a(admin):")
@@ -62,6 +71,8 @@ class LoginService:
             return AccountType.CUSTOMER
         else:
             return AccountType.ADMIN
+
+
 
 
 
