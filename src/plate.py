@@ -24,7 +24,7 @@ class PlateService:
         print("-------------------------------------\n")
 
     # TODO: Add admin validation
-    def add_new_plate(self, dish_name: string, price: int):
+    def add_new_plate(self, dish_name: string, price: float):
         new_id = len(self._plates) + 1
         self._plates.append(Plate(new_id, dish_name, price))
 

@@ -2,6 +2,7 @@ from login import LoginService, AccountType
 from plate import PlateService
 from cart import CartService
 from customer import CustomerService
+from admin import AdminService
 
 
 login_service = LoginService()
@@ -26,12 +27,17 @@ while True:
         account_type = login_service.prompt_account_type()
         if login_service.login(account_type):
 
-            plate_service.display_menu()
-
             # Customer
-            cart_service = CartService(plate_service)
-            customer_service = CustomerService(cart_service)
-            customer_service.run_customer()
+            if account_type == AccountType.CUSTOMER:
+                plate_service.display_menu()
+                cart_service = CartService(plate_service)
+                customer_service = CustomerService(cart_service)
+                customer_service.run_customer()
+
+            elif account_type == AccountType.ADMIN:
+                admin_service = AdminService(login_service, plate_service)
+                admin_service.run_admin()
+
 
     # Sign up
     elif selection == "-s":

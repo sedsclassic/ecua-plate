@@ -73,10 +73,6 @@ class LoginService:
             return AccountType.ADMIN
 
 
-
-
-
-
 # login = LoginService()
 # login.display_users()
 # print("\n")
