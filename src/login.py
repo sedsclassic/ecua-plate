@@ -80,11 +80,3 @@ class LoginService:
             return AccountType.CUSTOMER
         else:
             return AccountType.ADMIN
-
-
-# login = LoginService()
-# login.display_users()
-# print("\n")
-# login.add_user("Jema Lay", "jelay@uwa.ca", 'CUSTOMER')
-# login.display_users()
-# login.login()

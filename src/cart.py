@@ -1,8 +1,8 @@
-from plate import Plate, PlateService
+from plate import PlateService
 
 
 class CartService:
-    _cart = {}
+    _cart = {}  # int:Plate
     _plate_service: PlateService
 
     def __init__(self, service: PlateService):
@@ -17,15 +17,18 @@ class CartService:
         else:
             self._cart[plate_id] += quantity
 
-    def remove_plate(self):
-        ...
+    def remove_plate(self, plate_id: int):
+        if plate_id in self._cart:
+            del self._cart[plate_id]
+        else:
+            print("Invalid ID.\n")
 
     def display_cart(self):
         print("----------------CART-----------------")
         total = 0
         for plate_id in self._cart:
             plate = self._plate_service.find_plate(plate_id)
-            print(f"| {plate.name}: Qty({self._cart[plate_id]}) (${plate.price * self._cart[plate_id]})")
+            print(f"| [ID:{plate_id}] - {plate.name}: Qty({self._cart[plate_id]}) (${plate.price * self._cart[plate_id]})")
             total += plate.price * self._cart[plate_id]
         print(f"* Total: ${total}")
         print("-------------------------------------\n")
@@ -41,13 +44,5 @@ class CartService:
         self._cart = {}
         print("Thanks for your shopping with us!")
 
-# c = CartService(PlateService())
-# c.add_plate(1, 2)
-# c.add_plate(1, 1)
-# c.add_plate(2, 1)
-# c.add_plate(3, 7)
-# c.add_plate(12, 7)
-#
-# c.display_cart()
 
 

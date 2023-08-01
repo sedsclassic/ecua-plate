@@ -15,7 +15,7 @@ class CustomerService:
             if total == 0:
                 selection = input("-b(buy), -o(log out):")
             else:
-                selection = input("-b(buy), -p(pay),-o(log out):")
+                selection = input("-b(buy), -p(pay), -r(remove), -o(log out):")
 
             if selection == "-b":
                 plate_id = int(input("Enter ID to add plate:"))
@@ -24,5 +24,9 @@ class CustomerService:
                 self._cart_service.display_cart()
             elif selection == "-p" and total != 0:
                 self._cart_service.pay_cart()
+            elif selection == "-r" and total != 0:
+                plate_id = int(input("Enter ID to add plate:"))
+                self._cart_service.remove_plate(plate_id)
+                self._cart_service.display_cart()
 
         print("You are now logged out.")

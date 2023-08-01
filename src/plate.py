@@ -20,7 +20,7 @@ class PlateService:
     def display_menu(self):
         print("----------------MENU-----------------")
         for plt in self._plates:
-            print(f"| (ID: {plt.plate_id}) - {plt.name} (${plt.price})")
+            print(f"| [ID:{plt.plate_id}] - {plt.name} (${plt.price})")
         print("-------------------------------------\n")
 
     def add_new_plate(self, dish_name: string, price: float):
@@ -56,12 +56,4 @@ class PlateService:
                 return plt
         print("Error(find_plate).")
 
-
-# plate = PlateService()
-# plate.display_menu()
-#
-# plate.remove_plate(3)
-# plate.remove_plate(4)
-# plate.add_new_plate("caca", 12.8)
-# plate.display_menu()
 

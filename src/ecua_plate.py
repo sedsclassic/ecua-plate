@@ -13,17 +13,14 @@ print("**            ECUA-PLATE!          **")
 print("*************************************\n")
 
 
-while True:
-    login_service.display_users()
+selection = ""
 
+while selection != "-q":  # Quit
+    login_service.display_users()
     selection = input("-l(log in), -s(sign up), -q(quit):")
 
-    # Quit
-    if selection == "-q":
-        break
-
     # Log in
-    elif selection == "-l":
+    if selection == "-l":
         account_type = login_service.prompt_account_type()
         if login_service.login(account_type):
 
@@ -34,10 +31,10 @@ while True:
                 customer_service = CustomerService(cart_service)
                 customer_service.run_customer()
 
+            # Admin
             elif account_type == AccountType.ADMIN:
                 admin_service = AdminService(login_service, plate_service)
                 admin_service.run_admin()
-
 
     # Sign up
     elif selection == "-s":
