@@ -1,5 +1,5 @@
 from plate import Plate, PlateService
-from login import LoginService
+from login import LoginService, AccountType
 
 
 class AdminService:
@@ -35,9 +35,11 @@ class AdminService:
             elif selection == "-ma":
 
                 while selection != "-c":
-                    selection = input("-r(remove account), -c(cancel):")
+                    selection = input("-a(add admin account), -r(remove account), -c(cancel):")
 
-                    if selection == "-r":
+                    if selection == "-a":
+                        self._login_service.create_new_account(AccountType.ADMIN)
+                    elif selection == "-r":
                         self._login_service.display_users()
                         delete_email = input("Enter email:")
                         self._login_service.delete_account(delete_email)

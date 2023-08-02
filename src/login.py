@@ -4,6 +4,7 @@ import string
 
 # Admin password
 ADMIN_PWD = "admin"
+ADMIN_EMAIL = "admin@ecu.ec"
 
 
 class AccountType(Enum):
@@ -15,14 +16,14 @@ class AccountType(Enum):
 class Account:
     name: string
     email: string
+    password: string
     type: AccountType
 
 
 class LoginService:
     _accounts: list[Account] = [
-        Account("Aaa Aa", "a@a.a", AccountType.CUSTOMER),
-        Account("Maria Jose", "majo@hotmail.com", AccountType.ADMIN),
-        Account("Jose Maria", "joma@hotmail.com", AccountType.CUSTOMER),
+        Account("Admin", ADMIN_EMAIL, ADMIN_PWD, AccountType.ADMIN),
+        Account("Jose Luis", "j@gmail.com", "joseluis", AccountType.CUSTOMER),
     ]
 
     def display_users(self):
@@ -32,24 +33,40 @@ class LoginService:
         print("-------------------------------------\n")
 
     @staticmethod
-    def validate_admin_pwd():
+    def request_admin_pwd():
         admin_pwd = input("Enter admin password:")
         if admin_pwd != ADMIN_PWD:
             print("Access denied.")
             return False
         return True
 
-    def register_account(self, account_type: AccountType):
-        if account_type == AccountType.ADMIN and not LoginService.validate_admin_pwd():
+    def create_new_account(self, account_type: AccountType):
+        if account_type == AccountType.ADMIN and not LoginService.request_admin_pwd():
             return
 
-        new_name = input("Enter your name:")
-        new_email = input("Enter your email:")
+        name = input("Enter name:")
+        email = input("Enter email:")
 
-        self._accounts.append(Account(new_name, new_email, account_type))
+        for account in self._accounts:
+            if account.email == email:
+                print("An account already exists for that email.")
+                return
+
+        pwd1 = input("Enter password:")
+        pwd2 = input("Confirm password:")
+        if pwd1 != pwd2:
+            print("Passwords do not match.")
+            return
+
+        self._accounts.append(Account(name, email, pwd2, account_type))
         print("Account added successfully.")
 
     def delete_account(self, email):
+        if email == ADMIN_EMAIL:
+            print("Denied.")
+            return
+        elif not LoginService.request_admin_pwd():
+            return
 
         for acc in self._accounts:
             if acc.email == email:
@@ -59,14 +76,15 @@ class LoginService:
         print("Account not found.")
 
     def login(self, account_type: AccountType) -> bool:
-        if account_type == AccountType.ADMIN and not LoginService.validate_admin_pwd():
-            return False
-
-        email = input("Enter email: ")
+        email = input("Enter email:")
         for acc in self._accounts:
             if email == acc.email and account_type == acc.type:
-                print(f"        Welcome {acc.name}!")
-                return True
+                pwd = input("Enter password:")
+                if pwd == acc.password:
+                    print(f"        Welcome {acc.name}!")
+                    return True
+                print("Incorrect password.")
+                return False
         print("Account not found.")
         return False
 
