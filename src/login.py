@@ -40,25 +40,27 @@ class LoginService:
             return False
         return True
 
-    def create_new_account(self, account_type: AccountType):
+    def prompt_new_account_info(self, account_type: AccountType):
         if account_type == AccountType.ADMIN and not LoginService.request_admin_pwd():
             return
-
-        name = input("Enter name:")
-        email = input("Enter email:")
-
-        for account in self._accounts:
-            if account.email == email:
-                print("An account already exists for that email.")
-                return
-
+        new_name = input("Enter name:")
+        new_email = input("Enter email:")
         pwd1 = input("Enter password:")
         pwd2 = input("Confirm password:")
         if pwd1 != pwd2:
             print("Passwords do not match.")
             return
 
-        self._accounts.append(Account(name, email, pwd2, account_type))
+        # Is this ILLEGAL????
+        self.create_account(new_name, new_email, pwd2, account_type)
+
+    def create_account(self, name: string, email: string, password: string, account_type: AccountType):
+        for account in self._accounts:
+            if account.email == email:
+                print("An account already exists for that email.")
+                return
+
+        self._accounts.append(Account(name, email, password, account_type))
         print("Account added successfully.")
 
     def delete_account(self, email):

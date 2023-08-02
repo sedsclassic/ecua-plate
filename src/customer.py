@@ -29,4 +29,4 @@ class CustomerService:
                 self._cart_service.remove_plate(plate_id)
                 self._cart_service.display_cart()
 
-        print("You are now logged out.")
+        print("You have successfully logged out.")

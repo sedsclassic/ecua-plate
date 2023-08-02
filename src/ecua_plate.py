@@ -38,4 +38,4 @@ while selection != "-q":  # Quit
 
     # Sign up
     elif selection == "-s":
-        login_service.create_new_account(AccountType.CUSTOMER)
+        login_service.prompt_new_account_info(AccountType.CUSTOMER)

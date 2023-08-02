@@ -9,7 +9,8 @@ class CartService:
         self._plate_service = service
 
     def add_plate(self, plate_id: int, quantity: int):
-        if not self._plate_service.does_plate_exist(plate_id):
+        if not self._plate_service.does_plate_exist_by_id(plate_id):
+            print("Plate was not found.")
             return
 
         if plate_id not in self._cart:

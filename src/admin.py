@@ -23,7 +23,7 @@ class AdminService:
                         self._plate_service.display_menu()
                         plate_name = input("Enter new plate name:")
                         price = float(input("Enter new plate price:"))
-                        self._plate_service.add_new_plate(plate_name, price)
+                        self._plate_service.create_plate(plate_name, price)
                         self._plate_service.display_menu()
 
                     elif selection == "-r":
@@ -38,10 +38,11 @@ class AdminService:
                     selection = input("-a(add admin account), -r(remove account), -c(cancel):")
 
                     if selection == "-a":
-                        self._login_service.create_new_account(AccountType.ADMIN)
+                        self._login_service.prompt_new_account_info(AccountType.ADMIN)
                     elif selection == "-r":
                         self._login_service.display_users()
                         delete_email = input("Enter email:")
                         self._login_service.delete_account(delete_email)
                         self._login_service.display_users()
+
 
